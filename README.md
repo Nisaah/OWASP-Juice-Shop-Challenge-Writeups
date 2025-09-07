@@ -20,8 +20,12 @@ https://juice-shop.herokuapp.com/#/
 - findings -> Individual vulnerability write ups
 
 ## Findings
-1.
-
+## 1. Accessing Hidden Files via robots.txt and Null Byte Injection in Juice Shop
+### Explanation
+robots.txt Discovery
+While exploring the application, accessed the /robots.txt file: https://juice-shop.herokuapp.com/robots.txt
+and saw:
+'''Disallow: /ftp'''
  ## Connect with Me
  - LinkedIn: https://www.linkedin.com/in/bahjath-nisa-023730265
  - Medium Blog: https://www.medium.com/@nisabahjath
