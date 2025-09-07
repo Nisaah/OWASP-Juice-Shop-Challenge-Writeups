@@ -1,5 +1,5 @@
 # OWASP-Juice-Shop-Pentest
-Penetration test report for OWASP Juice Shop covering common OWASP Top 10 vulnerabilities, POC screenshots, and remediation steps
+Penetration test report for OWASP Juice Shop covering common OWASP Top 10 vulnerabilities, POC screenshots, and remediation steps.
 
 ## Objective
 Practice web application penetration testing in a safe environment
@@ -15,11 +15,7 @@ https://juice-shop.herokuapp.com/#/
 - SQLMap
 - Firefox Developer tools
 
-## Contents
-- Owasp-juice-shop-pentest-report.pdf -> full report with findings, poc screenshots, and remediation
-- findings -> Individual vulnerability write ups
-
-## Findings
+## Vulnerabilities
 ## 1. SQL Injection Login Bypass
 ### Explanation
 The application is vulnerable to SQL Injection (OWASP Top 10: A03 - Injection). User input is inserted directly into an SQL query without proper validation or escaping. This allows an attacker to modify the query logic by injecting SQL code. In this case, using ' OR 1=1; in the username field makes the condition always true, causing the database to return the first user (usually the administrator), allowing unauthorized login regardless of the password entered.
@@ -33,6 +29,9 @@ I was successfully logged in as the **admin user** (admin@juice-sh.op), without 
 This is a classic **SQL Injection** vulnerability. The injected input modified the SQL query behind the login form to:
 
 ### POC
+<img width="1004" height="407" alt="SQLI" src="https://github.com/user-attachments/assets/299095fa-a1ef-49a0-8088-c1c4833b3802" />
+
+<img width="1004" height="396" alt="SQLI2" src="https://github.com/user-attachments/assets/cf76954a-8d1d-4236-9310-d59b3c0c5320" />
 
 ### Security Impact
 
