@@ -25,6 +25,9 @@ https://juice-shop.herokuapp.com/#/
 robots.txt Discovery
 While exploring the application, accessed the /robots.txt file: https://juice-shop.herokuapp.com/robots.txt
 and saw:
+<code>User-agent: *
+Disallow: /ftp</code>
+
 ```Disallow: /ftp```
  ## Connect with Me
  - LinkedIn: https://www.linkedin.com/in/bahjath-nisa-023730265
