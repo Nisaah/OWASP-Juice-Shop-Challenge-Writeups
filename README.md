@@ -20,6 +20,33 @@ https://juice-shop.herokuapp.com/#/
 - findings -> Individual vulnerability write ups
 
 ## Findings
+## 1. SQL Injection Login Bypass
+### Explanation
+The application is vulnerable to SQL Injection (OWASP Top 10: A03 - Injection). User input is inserted directly into an SQL query without proper validation or escaping. This allows an attacker to modify the query logic by injecting SQL code. In this case, using ' OR 1=1; in the username field makes the condition always true, causing the database to return the first user (usually the administrator), allowing unauthorized login regardless of the password entered.
+
+### Exploit Steps
+- Navigate to the login page of juice shop, https://juice-shop.herokuapp.com/#/login
+  I tested the login form with the following credentials:
+  **Username**: admin'or1=1;
+  **Password**: enter any random values
+I was successfully logged in as the **admin user** (admin@juice-sh.op), without needing to know the emai and password.
+This is a classic **SQL Injection** vulnerability. The injected input modified the SQL query behind the login form to:
+
+### POC
+
+### Security Impact
+
+- Full admin access without authentication
+- Bypass of authorization controls
+- High risk if in production: could lead to full data exposure or manipulation
+### OWASP Mapping
+- A01:2021 – Broken Access Control
+- A03:2021 – Injection
+### Remediations
+- Use parameterized queries
+- Use an ORM or query builder: Tools like Sequelize, Hibernate, or Entity Framework automatically protect against SQL injection.
+- Validate all user input
+- Don’t show detailed error messages
 ## 1. Accessing Hidden Files via robots.txt and Null Byte Injection in Juice Shop
 ### Explanation
 robots.txt Discovery
