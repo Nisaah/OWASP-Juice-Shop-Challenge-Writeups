@@ -30,6 +30,7 @@ This allows an attacker to inject malicious JavaScript code that runs in the vic
 ### POC
 
 <img width="980" height="394" alt="DOM-based XSS" src="https://github.com/user-attachments/assets/211bc256-fd5f-4fcf-baaf-93b2d1f76b0b" />
+
 ### Remediations
 - Avoid using these when inserting untrusted input into the DOM:
 `innerHTML, outerHTML, document.write, eval, setTimeout()` / `setInterval()` with strings, `Element.setAttribute()` with dynamic values like `src`, `href`, etc
@@ -65,9 +66,12 @@ This is an example of "Missing Encoding" — where user input (like filenames or
 ### POC
 <img width="810" height="212" alt="missing encoding 2" src="https://github.com/user-attachments/assets/8587ae7b-6183-445a-af52-cfdc47c81f13" />
 
+
 <img width="802" height="172" alt="missing encoding3" src="https://github.com/user-attachments/assets/123e86fe-96a3-4c6c-b710-9cc03893bb18" />
 
+
 <img width="955" height="82" alt="missing encoding solved" src="https://github.com/user-attachments/assets/aa840e1f-9808-4ca2-a3bc-d5f8040b2bfc" />
+
 ### Root Cause
 - The image URL was not encoded properly, so the browser couldn’t interpret the file path.
 - This is a classic case of improper input handling: not encoding special characters before using them in URLs or file paths.
