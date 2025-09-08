@@ -16,7 +16,66 @@ https://juice-shop.herokuapp.com/#/
 - Firefox Developer tools
 
 ## Vulnerabilities
-## 1. SQL Injection Login Bypass
+
+## DOM-Based XSS
+
+### Explanation
+The application is vulnerable to DOM Based XSS because it uses untrusted data from the URL and inserts it directly into the page using JavaScript, without sanitizing or validating the input.
+This allows an attacker to inject malicious JavaScript code that runs in the victim’s browser.
+###  Exploit Steps
+- Access OWASP Juice shop: http://localhost:3000/ (if you have installed it locally)
+- Go to the Search area and insert the below payload in search parameter
+  <pre><iframe src="javascript:alert(`xss`)"></pre>
+- After Inserting this payload as we press Enter our challenge gets completed and a alert box comes on screen with xss written on it.
+### POC
+
+<img width="980" height="394" alt="DOM-based XSS" src="https://github.com/user-attachments/assets/211bc256-fd5f-4fcf-baaf-93b2d1f76b0b" />
+### Remediations
+- Avoid using these when inserting untrusted input into the DOM:
+`innerHTML, outerHTML, document.write, eval, setTimeout()` / `setInterval()` with strings, `Element.setAttribute()` with dynamic values like `src`, `href`, etc
+Use safer alternatives: Use textContent or innerText to insert plain text safely
+- Validate the input: Only allow expected input (like letters, numbers, etc.). Block special characters if not needed.
+- Encode data before inserting it: Convert <, >, ', " to safe characters so they don’t run as code.
+- Use a Content Security Policy (CSP)
+
+## Missing Encoding
+Vulnerability: Missing URL Encoding
+Category: Improper Input Validation
+Difficulty: ⭐ (Easy)
+
+### Goal
+Retrieve and view the photo of Bjoern's cat in "melee combat-mode" on the Photo Wall page.
+### What is the vulnerability?
+The app fails to properly encode special characters in image file names (like # or emoji). As a result:
+The browser misinterprets part of the filename.
+The image fails to load.
+This is an example of "Missing Encoding" — where user input (like filenames or URLs) is not correctly encoded before use.
+### Exploit Steps
+- Go to the Photo Wall page.
+- You’ll notice that one image is broken (it doesn’t load).
+- Open DevTools (F12) → Go to the Network or Elements tab.
+- Inspect the image tag (<img src="assets/public/images/uploads/ᓚᘏᗢ-#zatschi-#whoneedsfourlegs-1572600969477.jpg" />) of the broken image.
+- The file name contains special characters, like #
+- URLs cannot contain raw # characters, as # is used to indicate a fragment identifier in URLs.
+- Use a URL encoder tool (https://meyerweb.com/eric/tools/dencoder/) to encode special characters.
+- # become %23
+- Replace the image tag manually with the encoded version (<img src="assets/public/images/uploads/ᓚᘏᗢ-%23zatschi-%23whoneedsfourlegs-1572600969477.jpg" />)
+- Press Enter or paste it into the browser.
+- The cat photo now loads successfully.
+### POC
+<img width="810" height="212" alt="missing encoding 2" src="https://github.com/user-attachments/assets/8587ae7b-6183-445a-af52-cfdc47c81f13" />
+
+<img width="802" height="172" alt="missing encoding3" src="https://github.com/user-attachments/assets/123e86fe-96a3-4c6c-b710-9cc03893bb18" />
+
+<img width="955" height="82" alt="missing encoding solved" src="https://github.com/user-attachments/assets/aa840e1f-9808-4ca2-a3bc-d5f8040b2bfc" />
+### Root Cause
+- The image URL was not encoded properly, so the browser couldn’t interpret the file path.
+- This is a classic case of improper input handling: not encoding special characters before using them in URLs or file paths.
+### Remediations
+- Always encode special characters (#, &, ?, emoji, etc.) in URLs 
+- Use `encodeURIComponent()` in JavaScript.
+
+## 1.SQL Injection Login Bypass
 ### Explanation
 The application is vulnerable to SQL Injection (OWASP Top 10: A03 - Injection). User input is inserted directly into an SQL query without proper validation or escaping. This allows an attacker to modify the query logic by injecting SQL code. In this case, using ' OR 1=1; in the username field makes the condition always true, causing the database to return the first user (usually the administrator), allowing unauthorized login regardless of the password entered.
 
