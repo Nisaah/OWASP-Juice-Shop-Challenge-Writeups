@@ -18,9 +18,9 @@ https://juice-shop.herokuapp.com/#/
 ## Vulnerabilities
 
 ## DOM-Based XSS
-Vulnerability: DOM-Based XSS
-Category: Improper Input Validation
-Difficulty: ⭐ (Easy)
+- Vulnerability: DOM-Based XSS
+- Category: Improper Input Validation
+- Difficulty: ⭐ (Easy)
 
 ### Explanation
 The application is vulnerable to DOM Based XSS because it uses untrusted data from the URL and inserts it directly into the page using JavaScript, without sanitizing or validating the input.
@@ -43,9 +43,9 @@ Use safer alternatives: Use textContent or innerText to insert plain text safely
 - Use a Content Security Policy (CSP)
 
 ## Missing Encoding
-Vulnerability: Missing URL Encoding
-Category: Improper Input Validation
-Difficulty: ⭐ (Easy)
+- Vulnerability: Missing URL Encoding
+- Category: Improper Input Validation
+- Difficulty: ⭐ (Easy)
 
 ### Goal
 Retrieve and view the photo of Bjoern's cat in "melee combat-mode" on the Photo Wall page.
