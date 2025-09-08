@@ -55,12 +55,12 @@ This is an example of "Missing Encoding" — where user input (like filenames or
 - Go to the Photo Wall page.
 - You’ll notice that one image is broken (it doesn’t load).
 - Open DevTools (F12) → Go to the Network or Elements tab.
-- Inspect the image tag (<img src="assets/public/images/uploads/ᓚᘏᗢ-#zatschi-#whoneedsfourlegs-1572600969477.jpg" />) of the broken image.
+- Inspect the image tag (src="assets/public/images/uploads/ᓚᘏᗢ-#zatschi-#whoneedsfourlegs-1572600969477.jpg") of the broken image.
 - The file name contains special characters, like #
 - URLs cannot contain raw # characters, as # is used to indicate a fragment identifier in URLs.
 - Use a URL encoder tool (https://meyerweb.com/eric/tools/dencoder/) to encode special characters.
 - # become %23
-- Replace the image tag manually with the encoded version (<img src="assets/public/images/uploads/ᓚᘏᗢ-%23zatschi-%23whoneedsfourlegs-1572600969477.jpg" />)
+- Replace the image tag manually with the encoded version (src="assets/public/images/uploads/ᓚᘏᗢ-%23zatschi-%23whoneedsfourlegs-1572600969477.jpg")
 - Press Enter or paste it into the browser.
 - The cat photo now loads successfully.
 ### POC
