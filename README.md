@@ -18,6 +18,9 @@ https://juice-shop.herokuapp.com/#/
 ## Vulnerabilities
 
 ## DOM-Based XSS
+Vulnerability: DOM-Based XSS
+Category: Improper Input Validation
+Difficulty: ⭐ (Easy)
 
 ### Explanation
 The application is vulnerable to DOM Based XSS because it uses untrusted data from the URL and inserts it directly into the page using JavaScript, without sanitizing or validating the input.
@@ -59,7 +62,7 @@ This is an example of "Missing Encoding" — where user input (like filenames or
 - The file name contains special characters, like #
 - URLs cannot contain raw # characters, as # is used to indicate a fragment identifier in URLs.
 - Use a URL encoder tool (https://meyerweb.com/eric/tools/dencoder/) to encode special characters.
-- # become %23
+- '#' become %23
 - Replace the image tag manually with the encoded version (src="assets/public/images/uploads/ᓚᘏᗢ-%23zatschi-%23whoneedsfourlegs-1572600969477.jpg")
 - Press Enter or paste it into the browser.
 - The cat photo now loads successfully.
