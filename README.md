@@ -15,7 +15,7 @@ https://juice-shop.herokuapp.com/#/
 - SQLMap
 - Firefox Developer tools
 
-## Vulnerabilities
+## Challenges
 
 ## DOM-Based XSS
 - Vulnerability: DOM-Based XSS
@@ -81,6 +81,81 @@ This is an example of "Missing Encoding" — where user input (like filenames or
 ### Remediations
 - Always encode special characters (#, &, ?, emoji, etc.) in URLs 
 - Use `encodeURIComponent()` in JavaScript.
+
+## Challenge Name: Exposed Metrics
+- Category: Sensitive Data Exposure
+- Difficulty: ⭐ (Easy)
+### Goal
+Find the endpoint (URL) that exposes internal usage metrics to monitoring tools.
+### Usage Metrics
+- Metrics are data points about how the system is running and how it’s performing.
+- Examples: CPU usage, number of users, page load times, error rates.
+- These are usually collected by tools like Prometheus to monitor app health.
+- They help developers, system admins, and cybersecurity teams monitor the health, performance, and behavior of the system.
+### Prometheus
+- Prometheus is an open-source monitoring system
+- It collects metrics from apps via a URL endpoint (usually /metrics).
+### Solution Steps
+- Read the Hint: The hint tells you the monitoring system is Prometheus
+- Check Prometheus Documentation: The docs show the default metrics endpoint is, /metrics
+- Try That in Juice Shop: If your Juice Shop is running at
+<pre>http://localhost:3000</pre>
+- Then go to
+<pre>http://localhost:3000/metrics</pre>
+- That page will show internal app metrics — and boom! The challenge is solved.
+
+### POCs
+
+<img width="728" height="298" alt="exposed metrics" src="https://github.com/user-attachments/assets/aed97dc8-3ee8-4180-a449-483c8d1a2fc8" />
+
+### Remediations
+- Change default, easy-to-guess URL (/metrics) to a custom path (e.g., /hidden-stats-XY12)
+- Add authentication: Require login, token, or API key to access /metrics
+- Restrict access to /metrics: Only allow trusted IP addresses or internal users to see the endpoint
+- Disable metrics in production: If metrics aren't needed in production, turn them off completely
+
+## Outdated Whitelist
+- Category: Unvalidated Redirects (also called Open Redirects)
+- Difficulty: ⭐ (Easy)
+### Goal
+Find a redirect link in the Juice Shop app that points to an old cryptocurrency address that’s no longer being promoted.
+### Solution Steps:
+- Open Developer Tools
+- Find the Main JavaScript File from debugger tab (```main.js```,```main-es2018.js```)
+- Use Pretty Print
+      Minified files are hard to read — everything is on one long line.
+      So, Click the {} icon at the bottom of the code window in the developer tools.
+      This is called “Pretty Print”.
+      It reformats the file so the code is nicely indented and readable.
+      Alternatively, you can copy the code and paste it into an online JavaScript beautifier like: https://beautifier.io/
+- Search the Beautified JavaScript: Use the search feature (usually Ctrl + F or Cmd + F) and look for keywords like, redirect, bitcoin, blockchain, address, wallet
+- I found the url When I search blockchain, url: './redirect?to=https://blockchain.info/address/1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm'
+- Test the Link in the Browser, http://localhost:3000/redirect?to=https://blockchain.info/address/IAbKfgvw9psQ41NbLi8kufDQTezwG8DRZm
+
+### POC
+
+<img width="1004" height="284" alt="Outdated-Whitelist" src="https://github.com/user-attachments/assets/26b05a4d-8847-4842-9781-4a268c9d5327" />
+
+<img width="1004" height="348" alt="Outdated-Whitelist2" src="https://github.com/user-attachments/assets/9622742e-8896-42e7-8dae-dbcb743ee25f" />
+
+
+### Remediations
+- Use a Whitelist of Allowed URLs: Only allow redirects to trusted, pre-approved domains. Example: allow only your own domain or known internal links.
+- Block All External Redirects: If not absolutely necessary, do not allow redirection to external URLs at all.
+- Validate the to= Parameter Carefully: Ensure the to value is a safe, expected format, not just any URL the user provides.
+- Do Not Rely on Client-Side Redirects Only: Check and enforce redirect validation on the server side, not just in JavaScript.
+- Use Relative Paths Instead of Full URLs: Instead of allowing full URLs like https://example.com, only allow internal paths like /dashboard.
+
+
+
+
+
+
+
+
+
+
+
 
 ## 1.SQL Injection Login Bypass
 ### Explanation
