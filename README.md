@@ -1,4 +1,4 @@
-# OWASP-Juice-Shop-solution-guide
+# OWASP-Juice-Shop-solution-guide-difficulty-1 star
 Welcome to my writeups for the [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/), one of the most modern and intentionally insecure web applications for security training.
 This repository includes detailed walkthroughs for solving each challenge in Juice Shop, complete with explanations, screenshots, and best practices.
 
